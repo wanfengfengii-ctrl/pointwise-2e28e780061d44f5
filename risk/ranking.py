@@ -1,6 +1,7 @@
 from lots.register import load_lot
 from lots.roster import roster_positions
 from measure.freeze import load_frozen_revision
+from measure.schema import FrozenRevision
 from risk.explain import RiskResult, explain_piece
 from risk.residuals import mean_absolute_residual, residuals_for_piece
 
@@ -17,6 +18,13 @@ def rank_frozen_revision(lot, frozen):
         risks.append(explain_piece(piece_id, score, evidence))
     risks.sort(key=lambda risk: (-risk.score, positions[risk.piece_id]))
     return RiskResult(lot.batch_id, frozen.freeze_id, frozen.revision_id, tuple(risks))
+
+
+def rank_reading_revision(lot, revision):
+    """Rank any still-existing reading revision with the full V1 rules (no freeze needed)."""
+    if lot.batch_id != revision.batch_id:
+        raise ValueError('revision belongs to another batch')
+    return rank_frozen_revision(lot, FrozenRevision(None, revision))
 
 
 def preview_risk(db, freeze_id):

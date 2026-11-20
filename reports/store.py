@@ -4,6 +4,7 @@ from database import fraction_parts, is_record_id, open_database, transaction
 from lots.schema import initialize_lot_schema
 from measure.schema import initialize_measure_schema
 from reports.schema import InitialReceipt, initialize_reports_schema
+from reports.revision_schema import initialize_revision_schema
 
 
 def open_analysis(path):
@@ -12,6 +13,7 @@ def open_analysis(path):
         initialize_lot_schema(db)
         initialize_measure_schema(db)
         initialize_reports_schema(db)
+        initialize_revision_schema(db)
     except BaseException:
         db.close()
         raise

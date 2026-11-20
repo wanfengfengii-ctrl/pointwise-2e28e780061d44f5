@@ -1,6 +1,7 @@
 import json
 
 from database import from_fraction_parts
+from reports.revision_store import load_revision_report
 from reports.schema import InitialReceipt, InitialReport
 from reports.store import load_initial_records
 from risk.explain import PieceRisk, ResidualEvidence
@@ -29,3 +30,17 @@ def read_initial(db, report_id):
         for piece, num, den, count, payload in risk_rows
     )
     return InitialReport(report_id, batch_id, freeze_id, revision_id, limit, selected, ranked, receipt)
+
+
+def read_revision(db, report_id):
+    header, started, selected = load_revision_report(db, report_id)
+    report_id, batch_id, initial_report_id, revision_id, request_id = header
+    return {
+        'report_id': report_id,
+        'batch_id': batch_id,
+        'initial_report_id': initial_report_id,
+        'revision_id': revision_id,
+        'request_id': request_id,
+        'started_at_activation': started,
+        'selected': selected,
+    }
