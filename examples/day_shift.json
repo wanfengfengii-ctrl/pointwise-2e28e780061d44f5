@@ -1,0 +1,13 @@
+{
+  "batch_id": "B",
+  "roster": ["X", "Y", "Z"],
+  "limit": 2,
+  "gauges": [["center", "10", "mm"], ["edge", "0", "um"]],
+  "ticket": "day-1",
+  "readings": [
+    ["X", "center", "13", "mm"], ["X", "edge", "0", "um"],
+    ["Y", "center", "11", "mm"], ["Y", "edge", "2000", "um"],
+    ["Z", "center", "11", "mm"], ["Z", "edge", null, null]
+  ],
+  "corrections": [["X", "center", "10", "mm"], ["Z", "center", "14", "mm"]]
+}
